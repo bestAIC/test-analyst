@@ -254,3 +254,11 @@
   text-align:left;
   line-height:normal;
 }
+.basicbutton-outline {
+  font-family:'Roboto-Medium', 'Roboto Medium', 'Roboto';
+  font-weight:500;
+  font-style:normal;
+  font-size:16px;
+  color:#1BBC9C;
+  text-align:center;
+}

@@ -1,51 +1,320 @@
 ﻿<!DOCTYPE html>
-<html>
-  <head>
-    <title>Index</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Untitled Document</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <link href="resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
-    <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
-    <link href="data/styles.css" type="text/css" rel="stylesheet"/>
-    <link href="files/index/styles.css" type="text/css" rel="stylesheet"/>
-    <script src="resources/scripts/jquery-1.7.1.min.js"></script>
-    <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
-    <script src="resources/scripts/axure/axQuery.js"></script>
-    <script src="resources/scripts/axure/globals.js"></script>
-    <script src="resources/scripts/axutils.js"></script>
-    <script src="resources/scripts/axure/annotation.js"></script>
-    <script src="resources/scripts/axure/axQuery.std.js"></script>
-    <script src="resources/scripts/axure/doc.js"></script>
-    <script src="data/document.js"></script>
-    <script src="resources/scripts/messagecenter.js"></script>
-    <script src="resources/scripts/axure/events.js"></script>
-    <script src="resources/scripts/axure/action.js"></script>
-    <script src="resources/scripts/axure/expr.js"></script>
-    <script src="resources/scripts/axure/geometry.js"></script>
-    <script src="resources/scripts/axure/flyout.js"></script>
-    <script src="resources/scripts/axure/ie.js"></script>
-    <script src="resources/scripts/axure/model.js"></script>
-    <script src="resources/scripts/axure/repeater.js"></script>
-    <script src="resources/scripts/axure/sto.js"></script>
-    <script src="resources/scripts/axure/utils.temp.js"></script>
-    <script src="resources/scripts/axure/variables.js"></script>
-    <script src="resources/scripts/axure/drag.js"></script>
-    <script src="resources/scripts/axure/move.js"></script>
-    <script src="resources/scripts/axure/visibility.js"></script>
-    <script src="resources/scripts/axure/style.js"></script>
-    <script src="resources/scripts/axure/adaptive.js"></script>
-    <script src="resources/scripts/axure/tree.js"></script>
-    <script src="resources/scripts/axure/init.temp.js"></script>
-    <script src="files/index/data.js"></script>
-    <script src="resources/scripts/axure/legacy.js"></script>
-    <script src="resources/scripts/axure/viewer.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link type="text/css" href="resources/css/reset.css" rel="Stylesheet" />
+    <link type="text/css" href="resources/css/default.css" rel="Stylesheet" />
+
     <script type="text/javascript">
-      $axure.utils.getTransparentGifPath = function() { return 'resources/images/transparent.gif'; };
-      $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
-      $axure.utils.getReloadPath = function() { return 'resources/reload.html'; };
+        if (location.href.toString().indexOf('file://localhost/') == 0) {
+            location.href = location.href.toString().replace('file://localhost/', 'file:///');
+        }
     </script>
-    <!-- Google Tag Manager -->
+
+    <script type="text/javascript" src="resources/scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="resources/scripts/player/splitter.js"></script>
+    <script type="text/javascript" src="resources/scripts/axutils.js"></script>
+    <script type="text/javascript" src="resources/scripts/player/axplayer.js"></script>
+    <script type="text/javascript" src="resources/scripts/messagecenter.js"></script>
+    <script type="text/javascript" src="data/document.js"></script>
+    <style type="text/css">
+
+#outerContainer {
+	width:1000px;
+	height:1500px;
+}
+
+.vsplitbar {
+	width: 3px;
+	background: #B9B9B9;
+}
+
+#rightPanel {
+    background-color: White;
+}
+
+#leftPanel {
+    /*min-width: 190px;*/
+}
+
+.splitterMask {
+   position:absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   background-image: url(resources/images/transparent.gif);
+   z-index: 20000;
+}
+
+
+    </style>
+    <script type="text/javascript" language="JavaScript"><!--
+        // isolate scope
+        (function() {
+            setUpController();
+
+            var configuration = $axure.document.configuration;
+            var _settings = {};
+            _settings.projectId = configuration.prototypeId;
+            _settings.isAxshare = configuration.isAxshare;
+            _settings.loadFeedbackPlugin = configuration.loadFeedbackPlugin;
+            _settings.startCollapsed = HashString("c") == "1";
+            if(HashString("c") == "2") closePlayer();
+
+            $axure.player.settings = _settings;
+
+            $(window).bind('load', function() {
+                if(CHROME_5_LOCAL && !$('body').attr('pluginDetected')) {
+                    window.location = 'resources/chrome/chrome.html';
+                }
+            });
+
+            $(document).ready(function() {
+                $axure.page.bind('load.start', mainFrame_onload);
+                $axure.messageCenter.addMessageListener(messageCenter_message);
+
+                if($axure.player.settings.loadFeedbackPlugin) {
+                    if($axure.player.settings.isAxshare) {
+                        $axure.utils.loadJS('/Scripts/plugins/feedback/feedback.js');
+                    } else {
+                        $axure.utils.loadJS('http://share.axure.com/Scripts/plugins/feedback/feedback.js');
+                    }
+                }
+
+                if(navigator.userAgent.indexOf("MSIE") >= 0) $('#outerContainer').width('100%');
+                initialize();
+                if($axure.player.settings.startCollapsed) $('#outerContainer').splitter({ sizeLeft: 0 });
+                else $('#outerContainer').splitter({ sizeLeft: 250 });
+                $('#leftPanel').width(250);
+
+                $(window).resize(function() { resizeContent(); });
+
+                $('#maximizePanelContainer').hide();
+
+                initializeLogo();
+
+                $(window).resize();
+                resizeContent();
+                //wait for ie to get to a good state and resize
+                if(IE && BROWSER_VERSION == "6.0") setTimeout(function() { $('#outerContainer').trigger('resize'); }, 30);
+
+                if($axure.player.settings.startCollapsed) {
+                    collapse();
+                    $('#leftPanel').width(0);
+                }
+            });
+        })();
+
+        var lastLeftPanelWidth = 250;
+
+        function messageCenter_message(message, data) {
+            if(message == 'expandFrame') expand();
+        }
+
+        function resizeContent() {
+            var newHeight = $(window).height();
+            var newWidth = $(window).width();
+
+            var controlContainerHeight = newHeight - 42;
+            if($('#interfaceControlFrameLogoContainer').is(':visible')) controlContainerHeight -= $('#interfaceControlFrameLogoContainer').height() + 16;
+
+            $('#outerContainer').height(newHeight).width(newWidth);
+            $('.vsplitbar').height(newHeight);
+            $('#leftPanel').height(newHeight);
+            $('#interfaceControlFrame').height(newHeight);
+            $('#interfaceControlFrameContainer').height(controlContainerHeight);
+
+            $('#rightPanel').height(newHeight);
+            $('#mainFrame').height(newHeight);
+
+            if($('#leftPanel').is(':visible')) $('#rightPanel').width($(window).width() - $('#leftPanel').width() - $('.vsplitbar').width());
+            else $('#rightPanel').width($(window).width());
+        }
+
+        function closePlayer() {
+            if($axure.page.location) window.location.href = $axure.page.location;
+            else {
+                var pageFile = getInitialUrl();
+                var currentLocation = window.location.toString();
+                window.location.href = currentLocation.substr(0, currentLocation.lastIndexOf("/") + 1) + pageFile;
+            }
+        }
+
+        function replaceHash(newHash) {
+            var currentLocWithoutHash = window.location.toString().split('#')[0];
+
+            //We use replace so that every hash change doesn't get appended to the history stack.
+            //We use replaceState in browsers that support it, else replace the location
+            if (typeof window.history.replaceState != 'undefined') {
+                window.history.replaceState(null, null, currentLocWithoutHash + newHash);
+            } else {
+                window.location.replace(currentLocWithoutHash + newHash);
+            }
+        }
+
+        function collapse() {
+            var currentHash = window.location.hash;
+            //If the collapse hash string var isn't present and set to 1, insert it
+            if (currentHash.indexOf('#c=1') == -1 && currentHash.indexOf('&c=1') == -1) {
+                var hashToSet = '';
+
+                var varIndex = currentHash.indexOf('#c=');
+                if (varIndex == -1) varIndex = currentHash.indexOf('&c=');
+                if (varIndex != -1) {
+                    var newHash = currentHash.substring(0, varIndex);
+
+                    newHash = newHash == '' ? '#c=1' : newHash + '&c=1';
+
+                    var ampIndex = currentHash.indexOf('&', varIndex + 1);
+                    if (ampIndex != -1) {
+                        newHash = newHash + currentHash.substring(ampIndex);
+                    }
+                    hashToSet = newHash;
+                } else if (currentHash.indexOf('#') != -1) {
+                    hashToSet = currentHash + '&c=1';
+                } else {
+                    hashToSet = '#c=1';
+                }
+
+                if (hashToSet != '') {
+                    replaceHash(hashToSet);
+                }
+            }
+
+            $('#maximizePanelContainer').show();
+            lastLeftPanelWidth = $('#leftPanel').width();
+            $('#leftPanel').hide();
+            $('.vsplitbar').hide();
+            $('#rightPanel').width($(window).width());
+            $(window).resize();
+            $('#outerContainer').trigger('resize');
+        }
+
+        function expand() {
+            var currentHash = self.location.hash;
+            var varIndex = currentHash.indexOf('&c=');
+            if (varIndex == -1) varIndex = currentHash.indexOf('#c=');
+            //If the collapse hash string var is present, remove it
+            if (varIndex != -1) {
+                var newHash = currentHash.substring(0, varIndex);
+
+                var ampIndex = currentHash.indexOf('&', varIndex + 1);
+                if (ampIndex != -1) {
+                    newHash = newHash == '' ? '#' + currentHash.substring(ampIndex + 1) : newHash + currentHash.substring(ampIndex);
+                }
+
+                replaceHash(newHash);
+            }
+
+            $('#maximizePanelContainer').hide();
+            $('#leftPanel').width(lastLeftPanelWidth);
+            $('#leftPanel').show();
+            $('.vsplitbar').show();
+            $('#rightPanel').width($(window).width() - $('#leftPanel').width() - $('.vsplitbar').width());
+            $(window).resize();
+            $('#outerContainer').trigger('resize');
+        }
+
+        function initialize() {
+            var legacyQString = QueryString("Page");
+            if (legacyQString.length > 0) {
+                location.href = location.href.substring(0, location.href.indexOf("?")) + "#p=" + legacyQString;
+                return;
+            }
+
+            var mainFrame = document.getElementById("mainFrame");
+            mainFrame.contentWindow.location.href = getInitialUrl();
+        }
+        
+        function getInitialUrl() {
+            var pageName = HashString("p");
+            if(pageName.length > 0) return pageName + ".html";
+            else {
+                var url = getFirstPageUrl($axure.document.sitemap.rootNodes);
+                return (url ? url : "about:blank");
+            }
+        }
+
+        function getFirstPageUrl(nodes) {
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                if (node.url) return node.url;
+                else {
+                    var hasChildren = (node.children && node.children.length > 0);
+                    if (hasChildren) {
+                        var url = getFirstPageUrl(node.children);
+                        if (url) return url;
+                    }
+                }
+            }
+            return null;
+        }
+
+        function initializeLogo() {
+            if($axure.document.configuration.logoImagePath) {
+                $('#interfaceControlFrameLogoImageContainer').html('<img id="logoImage" src="" />');
+                $('#logoImage').attr('src', $axure.document.configuration.logoImagePath).load(function() { resizeContent(); });
+                $('#interfaceControlFrameMinimizeContainer').css('background-color', '#FFFFFF');
+            } else $('#interfaceControlFrameLogoImageContainer').hide();
+
+            if ($axure.document.configuration.logoImageCaption) {
+                $('#interfaceControlFrameLogoCaptionContainer').html($axure.document.configuration.logoImageCaption);
+                $('#interfaceControlFrameMinimizeContainer').css('background-color', '#FFFFFF');
+            } else $('#interfaceControlFrameLogoCaptionContainer').hide();
+
+            if(!$('#interfaceControlFrameLogoImageContainer').is(':visible') && !$('#interfaceControlFrameLogoCaptionContainer').is(':visible')) {
+                $('#interfaceControlFrameLogoContainer').hide();
+            }
+        }
+
+        function mainFrame_onload() {
+            if($axure.page.pageName) document.title = $axure.page.pageName;
+        }
+
+        function QueryString(query) {
+            var qstring = self.location.href.split("?");
+            if(qstring.length < 2) return "";
+            return GetParameter(qstring, query);
+        }
+        
+        function GetParameter(qstring, query) {
+            var prms = qstring[1].split("&");
+            var frmelements = new Array();
+            var currprmeter, querystr = "";
+
+            for(var i = 0; i < prms.length; i++) {
+                currprmeter = prms[i].split("=");
+                frmelements[i] = new Array();
+                frmelements[i][0] = currprmeter[0];
+                frmelements[i][1] = currprmeter[1];
+            }
+
+            for(j = 0; j < frmelements.length; j++) {
+                if(frmelements[j][0].toLowerCase() == query.toLowerCase()) {
+                    querystr = frmelements[j][1];
+                    break;
+                }
+            }
+            return querystr;
+        }
+        
+        function HashString(query) {
+            var qstring = self.location.href.split("#");
+            if(qstring.length < 2) return "";
+            return GetParameter(qstring, query);
+        }
+
+    --></script>
+
+    <link type="text/css" rel="Stylesheet" href="plugins/sitemap/styles/sitemap.css" />
+    <script type="text/javascript" src="plugins/sitemap/sitemap.js"></script>
+    <link type="text/css" rel="Stylesheet" href="plugins/page_notes/styles/page_notes.css" />
+    <script type="text/javascript" src="plugins/page_notes/page_notes.js"></script>
+<!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NBNJWD"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -53,860 +322,40 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NBNJWD');</script>
-<!-- End Google Tag Manager -->
-<script>
-    (function(f,b){
-        var c;
-        f.hj=f.hj||function(){(f.hj.q=f.hj.q||[]).push(arguments)};
-        f._hjSettings={hjid:23250, hjsv:3};
-        c=b.createElement("script");c.async=1;
-        c.src="//static.hotjar.com/c/hotjar-23250.js?sv=3";
-        b.getElementsByTagName("head")[0].appendChild(c); 
-    })(window,document);
-</script>
-  </head>
-  <body>
-    <div id="base" class="">
-
-      <!-- Unnamed (Shape) -->
-      <div id="u0" class="ax_shape">
-        <img id="u0_img" class="img " src="images/index/u0.png"/>
-        <!-- Unnamed () -->
-        <div id="u1" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u2" class="ax_shape">
-        <img id="u2_img" class="img " src="images/index/u2.png"/>
-        <!-- Unnamed () -->
-        <div id="u3" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u4" class="ax_shape">
-        <img id="u4_img" class="img " src="images/index/u4.png"/>
-        <!-- Unnamed () -->
-        <div id="u5" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u6" class="ax_shape">
-        <img id="u6_img" class="img " src="images/index/u6.png"/>
-        <!-- Unnamed () -->
-        <div id="u7" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error.Container (Shape) -->
-      <div id="u8" class="ax_shape" data-label="Input.Error.Container">
-        <img id="u8_img" class="img " src="images/index/input_error_container_u8.png"/>
-        <!-- Unnamed () -->
-        <div id="u9" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error (Text Field) -->
-      <div id="u10" class="ax_text_field inputformstyle" data-label="Input.Error">
-        <input id="u10_input" type="text" value="Сумма кредита"/>
-      </div>
-
-      <!-- Input.Error.Container (Shape) -->
-      <div id="u11" class="ax_shape" data-label="Input.Error.Container">
-        <img id="u11_img" class="img " src="images/index/input_error_container_u8.png"/>
-        <!-- Unnamed () -->
-        <div id="u12" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error (Text Field) -->
-      <div id="u13" class="ax_text_field inputformstyle" data-label="Input.Error">
-        <input id="u13_input" type="text" value="Срок кредита"/>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u14" class="ax_shape">
-        <img id="u14_img" class="img " src="images/index/u14.png"/>
-        <!-- Unnamed () -->
-        <div id="u15" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u16" class="ax_shape">
-        <img id="u16_img" class="img " src="images/index/u14.png"/>
-        <!-- Unnamed () -->
-        <div id="u17" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u18" class="ax_shape">
-        <img id="u18_img" class="img " src="images/index/u18.png"/>
-        <!-- Unnamed () -->
-        <div id="u19" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u20" class="ax_shape">
-        <img id="u20_img" class="img " src="images/index/u18.png"/>
-        <!-- Unnamed () -->
-        <div id="u21" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u22" class="ax_shape">
-        <img id="u22_img" class="img " src="images/index/u18.png"/>
-        <!-- Unnamed () -->
-        <div id="u23" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Button.Blue (Shape) -->
-      <div id="u24" class="ax_shape" data-label="Button.Blue">
-        <img id="u24_img" class="img " src="images/index/button_blue_u24.png"/>
-        <!-- Unnamed () -->
-        <div id="u25" class="text">
-          <p><span>Оформить</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u26" class="ax_shape">
-        <img id="u26_img" class="img " src="images/index/u26.png"/>
-        <!-- Unnamed () -->
-        <div id="u27" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u28" class="ax_shape">
-        <img id="u28_img" class="img " src="images/index/u26.png"/>
-        <!-- Unnamed () -->
-        <div id="u29" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u30" class="ax_shape">
-        <img id="u30_img" class="img " src="images/index/u26.png"/>
-        <!-- Unnamed () -->
-        <div id="u31" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u32" class="ax_shape">
-        <img id="u32_img" class="img " src="images/index/u32.png"/>
-        <!-- Unnamed () -->
-        <div id="u33" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u34" class="ax_shape">
-        <img id="u34_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u35" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u36" class="ax_shape">
-        <img id="u36_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u37" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u38" class="ax_shape">
-        <img id="u38_img" class="img " src="images/index/u32.png"/>
-        <!-- Unnamed () -->
-        <div id="u39" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u40" class="ax_shape">
-        <img id="u40_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u41" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u42" class="ax_shape">
-        <img id="u42_img" class="img " src="images/index/u32.png"/>
-        <!-- Unnamed () -->
-        <div id="u43" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u44" class="ax_shape">
-        <img id="u44_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u45" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u46" class="ax_shape">
-        <img id="u46_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u47" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u48" class="ax_shape">
-        <img id="u48_img" class="img " src="images/index/u32.png"/>
-        <!-- Unnamed () -->
-        <div id="u49" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u50" class="ax_shape">
-        <img id="u50_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u51" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u52" class="ax_shape">
-        <img id="u52_img" class="img " src="images/index/u32.png"/>
-        <!-- Unnamed () -->
-        <div id="u53" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u54" class="ax_shape">
-        <img id="u54_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u55" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u56" class="ax_shape">
-        <img id="u56_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u57" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u58" class="ax_shape">
-        <img id="u58_img" class="img " src="images/index/u32.png"/>
-        <!-- Unnamed () -->
-        <div id="u59" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u60" class="ax_shape">
-        <img id="u60_img" class="img " src="images/index/u34.png"/>
-        <!-- Unnamed () -->
-        <div id="u61" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u62" class="ax_shape">
-        <img id="u62_img" class="img " src="images/index/u62.png"/>
-        <!-- Unnamed () -->
-        <div id="u63" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u64" class="ax_shape">
-        <img id="u64_img" class="img " src="images/index/u64.png"/>
-        <!-- Unnamed () -->
-        <div id="u65" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u66" class="ax_shape">
-        <img id="u66_img" class="img " src="images/index/u64.png"/>
-        <!-- Unnamed () -->
-        <div id="u67" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u68" class="ax_shape">
-        <img id="u68_img" class="img " src="images/index/u64.png"/>
-        <!-- Unnamed () -->
-        <div id="u69" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u70" class="ax_shape">
-        <img id="u70_img" class="img " src="images/index/u64.png"/>
-        <!-- Unnamed () -->
-        <div id="u71" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Button.Blue (Shape) -->
-      <div id="u72" class="ax_shape" data-label="Button.Blue">
-        <img id="u72_img" class="img " src="images/index/button_blue_u24.png"/>
-        <!-- Unnamed () -->
-        <div id="u73" class="text">
-          <p><span>Личный кабинет</span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error.Container (Shape) -->
-      <div id="u74" class="ax_shape" data-label="Input.Error.Container">
-        <img id="u74_img" class="img " src="images/index/input_error_container_u74.png"/>
-        <!-- Unnamed () -->
-        <div id="u75" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error (Text Field) -->
-      <div id="u76" class="ax_text_field inputformstyle" data-label="Input.Error">
-        <input id="u76_input" type="text" value="Сумма кредита"/>
-      </div>
-
-      <!-- Input.Error.Container (Shape) -->
-      <div id="u77" class="ax_shape" data-label="Input.Error.Container">
-        <img id="u77_img" class="img " src="images/index/input_error_container_u74.png"/>
-        <!-- Unnamed () -->
-        <div id="u78" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error (Text Field) -->
-      <div id="u79" class="ax_text_field inputformstyle" data-label="Input.Error">
-        <input id="u79_input" type="text" value="Срок кредита"/>
-      </div>
-
-      <!-- Button.Blue (Shape) -->
-      <div id="u80" class="ax_shape" data-label="Button.Blue">
-        <img id="u80_img" class="img " src="images/index/button_blue_u80.png"/>
-        <!-- Unnamed () -->
-        <div id="u81" class="text">
-          <p><span>Оформить</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u82" class="ax_shape">
-        <img id="u82_img" class="img " src="images/index/u82.png"/>
-        <!-- Unnamed () -->
-        <div id="u83" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u84" class="ax_shape">
-        <img id="u84_img" class="img " src="images/index/u82.png"/>
-        <!-- Unnamed () -->
-        <div id="u85" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u86" class="ax_shape">
-        <img id="u86_img" class="img " src="images/index/u86.png"/>
-        <!-- Unnamed () -->
-        <div id="u87" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u88" class="ax_h2">
-        <img id="u88_img" class="img " src="resources/images/transparent.gif"/>
-        <!-- Unnamed () -->
-        <div id="u89" class="text">
-          <p><span>Как взять займ</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u90" class="ax_h1">
-        <img id="u90_img" class="img " src="resources/images/transparent.gif"/>
-        <!-- Unnamed () -->
-        <div id="u91" class="text">
-          <p><span>Способы получения денег</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u92" class="ax_shape">
-        <img id="u92_img" class="img " src="images/index/u92.png"/>
-        <!-- Unnamed () -->
-        <div id="u93" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u94" class="ax_shape">
-        <img id="u94_img" class="img " src="images/index/u92.png"/>
-        <!-- Unnamed () -->
-        <div id="u95" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u96" class="ax_shape">
-        <img id="u96_img" class="img " src="images/index/u92.png"/>
-        <!-- Unnamed () -->
-        <div id="u97" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u98" class="ax_shape">
-        <img id="u98_img" class="img " src="images/index/u98.png"/>
-        <!-- Unnamed () -->
-        <div id="u99" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u100" class="ax_shape">
-        <img id="u100_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u101" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u102" class="ax_shape">
-        <img id="u102_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u103" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u104" class="ax_shape">
-        <img id="u104_img" class="img " src="images/index/u98.png"/>
-        <!-- Unnamed () -->
-        <div id="u105" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u106" class="ax_shape">
-        <img id="u106_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u107" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u108" class="ax_shape">
-        <img id="u108_img" class="img " src="images/index/u98.png"/>
-        <!-- Unnamed () -->
-        <div id="u109" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u110" class="ax_shape">
-        <img id="u110_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u111" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u112" class="ax_shape">
-        <img id="u112_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u113" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u114" class="ax_shape">
-        <img id="u114_img" class="img " src="images/index/u98.png"/>
-        <!-- Unnamed () -->
-        <div id="u115" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u116" class="ax_shape">
-        <img id="u116_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u117" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u118" class="ax_shape">
-        <img id="u118_img" class="img " src="images/index/u98.png"/>
-        <!-- Unnamed () -->
-        <div id="u119" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u120" class="ax_shape">
-        <img id="u120_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u121" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u122" class="ax_shape">
-        <img id="u122_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u123" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u124" class="ax_shape">
-        <img id="u124_img" class="img " src="images/index/u98.png"/>
-        <!-- Unnamed () -->
-        <div id="u125" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u126" class="ax_shape">
-        <img id="u126_img" class="img " src="images/index/u100.png"/>
-        <!-- Unnamed () -->
-        <div id="u127" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error.Container (Shape) -->
-      <div id="u128" class="ax_shape" data-label="Input.Error.Container">
-        <img id="u128_img" class="img " src="images/index/input_error_container_u74.png"/>
-        <!-- Unnamed () -->
-        <div id="u129" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error (Text Field) -->
-      <div id="u130" class="ax_text_field inputformstyle" data-label="Input.Error">
-        <input id="u130_input" type="text" value="Сумма кредита"/>
-      </div>
-
-      <!-- Input.Error.Container (Shape) -->
-      <div id="u131" class="ax_shape" data-label="Input.Error.Container">
-        <img id="u131_img" class="img " src="images/index/input_error_container_u74.png"/>
-        <!-- Unnamed () -->
-        <div id="u132" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Input.Error (Text Field) -->
-      <div id="u133" class="ax_text_field inputformstyle" data-label="Input.Error">
-        <input id="u133_input" type="text" value="Срок кредита"/>
-      </div>
-
-      <!-- Button.Blue (Shape) -->
-      <div id="u134" class="ax_shape" data-label="Button.Blue">
-        <img id="u134_img" class="img " src="images/index/button_blue_u80.png"/>
-        <!-- Unnamed () -->
-        <div id="u135" class="text">
-          <p><span>Оформить</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u136" class="ax_shape">
-        <img id="u136_img" class="img " src="images/index/u82.png"/>
-        <!-- Unnamed () -->
-        <div id="u137" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u138" class="ax_shape">
-        <img id="u138_img" class="img " src="images/index/u82.png"/>
-        <!-- Unnamed () -->
-        <div id="u139" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u140" class="ax_shape">
-        <img id="u140_img" class="img " src="images/index/u86.png"/>
-        <!-- Unnamed () -->
-        <div id="u141" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u142" class="ax_h1">
-        <img id="u142_img" class="img " src="resources/images/transparent.gif"/>
-        <!-- Unnamed () -->
-        <div id="u143" class="text">
-          <p><span>Как мы работаем</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u144" class="ax_shape">
-        <img id="u144_img" class="img " src="images/index/u92.png"/>
-        <!-- Unnamed () -->
-        <div id="u145" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u146" class="ax_shape">
-        <img id="u146_img" class="img " src="images/index/u92.png"/>
-        <!-- Unnamed () -->
-        <div id="u147" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u148" class="ax_shape">
-        <img id="u148_img" class="img " src="images/index/u92.png"/>
-        <!-- Unnamed () -->
-        <div id="u149" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u150" class="ax_shape">
-        <img id="u150_img" class="img " src="images/index/u150.png"/>
-        <!-- Unnamed () -->
-        <div id="u151" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u152" class="ax_shape">
-        <img id="u152_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u153" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u154" class="ax_shape">
-        <img id="u154_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u155" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u156" class="ax_shape">
-        <img id="u156_img" class="img " src="images/index/u150.png"/>
-        <!-- Unnamed () -->
-        <div id="u157" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u158" class="ax_shape">
-        <img id="u158_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u159" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u160" class="ax_shape">
-        <img id="u160_img" class="img " src="images/index/u150.png"/>
-        <!-- Unnamed () -->
-        <div id="u161" class="text">
-          <p><span></span></p>
+<!-- End Google Tag Manager —>
+</head>
+<body scroll="no">
+    <div id="outerContainer">
+
+        <div id="leftPanel">
+            <div id="interfaceControlFrame">
+                <div id="interfaceControlFrameMinimizeContainer">
+                    <a title="Minimize" id="interfaceControlFrameMinimizeButton" onclick="collapse();">&nbsp;</a>
+                    <div id="interfaceControlFrameCloseContainer">
+                        <a title="Close" id="interfaceControlFrameCloseButton" onclick="closePlayer();">&nbsp;</a>
+                    </div>
+                </div>
+                <div id="interfaceControlFrameLogoContainer">
+                    <div id="interfaceControlFrameLogoImageContainer"></div>
+                    <div id="interfaceControlFrameLogoCaptionContainer"></div>
+                </div>
+                <div id="interfaceControlFrameHeaderContainer">
+                    <ul id="interfaceControlFrameHeader">
+                    </ul>
+                </div>
+                <div id="interfaceControlFrameContainer">
+                </div>
+            </div>
+        </div>
+        <div id="rightPanel">
+            <iframe id="mainFrame" name="mainFrame" width="100%" height="100%" src="" frameborder="0" style="display: block;"></iframe>
         </div>
-      </div>
 
-      <!-- Unnamed (Shape) -->
-      <div id="u162" class="ax_shape">
-        <img id="u162_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u163" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u164" class="ax_shape">
-        <img id="u164_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u165" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u166" class="ax_shape">
-        <img id="u166_img" class="img " src="images/index/u150.png"/>
-        <!-- Unnamed () -->
-        <div id="u167" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u168" class="ax_shape">
-        <img id="u168_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u169" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u170" class="ax_shape">
-        <img id="u170_img" class="img " src="images/index/u150.png"/>
-        <!-- Unnamed () -->
-        <div id="u171" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u172" class="ax_shape">
-        <img id="u172_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u173" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u174" class="ax_shape">
-        <img id="u174_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u175" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u176" class="ax_shape">
-        <img id="u176_img" class="img " src="images/index/u150.png"/>
-        <!-- Unnamed () -->
-        <div id="u177" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u178" class="ax_shape">
-        <img id="u178_img" class="img " src="images/index/u152.png"/>
-        <!-- Unnamed () -->
-        <div id="u179" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u180" class="ax_shape">
-        <img id="u180_img" class="img " src="images/index/u180.png"/>
-        <!-- Unnamed () -->
-        <div id="u181" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u182" class="ax_h2">
-        <img id="u182_img" class="img " src="resources/images/transparent.gif"/>
-        <!-- Unnamed () -->
-        <div id="u183" class="text">
-          <p><span>Исправление кредитной истории</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Shape) -->
-      <div id="u184" class="ax_shape">
-        <img id="u184_img" class="img " src="images/index/u184.png"/>
-        <!-- Unnamed () -->
-        <div id="u185" class="text">
-          <p><span></span></p>
-        </div>
-      </div>
     </div>
-  </body>
+
+    <div id="maximizePanelContainer">
+        <iframe id="expandFrame" src="resources/expand.html" width="100%" height="100%" scrolling="no" allowtransparency="true" frameborder="0"></iframe>
+    </div>
+
+</body>
 </html>
